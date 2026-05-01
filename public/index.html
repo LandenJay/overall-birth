@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/jpg" href="IMG_3112.jpeg" />
+  <title>Overall Birth Services</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img class="logo" src="IMG_3112.jpeg" alt="Overall Birth Services logo" />
+        <span>Overall Birth Services</span>
+      </a>
+      <nav class="links">
+        <a href="keys.html">Birth Philosophy</a>
+        <a href="#package">Packages</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="badge">Knowledge • Empowerment • Your Choice • Support</p>
+        <h1>Calm, supportive doula care—rooted in advocacy and choice.</h1>
+        <p class="muted hero-sub">
+          Personalized support through pregnancy, birth, and postpartum—so you feel informed, grounded, and cared for.
+        </p>
+
+        <div class="cta-row">
+          <button class="btn" id="payBasicBtn">Book Basic Package — $1,200</button>
+          <a class="btn btn-outline" href="keys.html">Read our philosophy</a>
+        </div>
+
+        <p class="muted small">
+          Payment plans available — contact to set one up.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="package">
+      <div class="container">
+        <h2>Basic Package</h2>
+        <p class="muted">Includes:</p>
+        <ul class="bullets">
+          <li>2 prenatal visits</li>
+          <li>Birth support</li>
+          <li>1 postpartum visit</li>
+        </ul>
+
+        <div class="card-row">
+          <div class="card">
+            <div class="price-row">
+              <div>
+                <h3>Pay in Full</h3>
+                <p class="muted">Secure your package today.</p>
+              </div>
+              <div class="price">$1,200</div>
+            </div>
+            <button class="btn btn-wide" id="payBasicBtn2">Proceed to payment</button>
+            <p class="muted small">You’ll be redirected to Stripe Checkout.</p>
+          </div>
+
+          <div class="card alt">
+            <h3>Payment plans</h3>
+            <p class="muted">
+              Plans are available. Send a message and we’ll set one up that works for you.
+            </p>
+            <a class="btn btn-outline btn-wide" href="#contact">Contact for a plan</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="contact">
+      <div class="container">
+        <h2>Contact</h2>
+        <p class="muted">Send a message and we’ll get back to you soon.</p>
+
+        <!-- Simple mailto form (easy, no backend needed). Swap to Formspree/Netlify if you want. -->
+        <form class="form" onsubmit="return false;">
+          <label>
+            Name
+            <input id="name" type="text" placeholder="Your name"/>
+          </label>
+          <label>
+            Email
+            <input id="email" type="email" placeholder="you@example.com"/>
+          </label>
+          <label>
+            Message
+            <textarea id="message" rows="4" placeholder="How can we help?"></textarea>
+          </label>
+          <button class="btn btn-wide" id="emailBtn">Send message</button>
+          <p class="muted small">Opens your email client.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -10,90 +10,71 @@ async function startCheckout() {
     const data = await resp.json();
 
     if (!resp.ok || !data.url) {
-      throw new Error(data.error || "No checkout URL returned.");
+      throw new Error(data.error || "Checkout failed.");
     }
 
     window.location.href = data.url;
   } catch (err) {
-    console.error("Checkout error:", err);
-    alert("Couldn’t start payment. Please try again.");
+    console.error(err);
+    alert("Could not start payment.");
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const btn1 = document.getElementById("payBasicBtn");
-  const btn2 = document.getElementById("payBasicBtn2");
+  const payBtn1 = document.getElementById("payBasicBtn");
+  const payBtn2 = document.getElementById("payBasicBtn2");
 
-  if (btn1) btn1.addEventListener("click", startCheckout);
-  if (btn2) btn2.addEventListener("click", startCheckout);
+  if (payBtn1) payBtn1.addEventListener("click", startCheckout);
+  if (payBtn2) payBtn2.addEventListener("click", startCheckout);
 
   const yearEl = document.getElementById("year");
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
   }
-});
 
-function goToPayment() {
-  window.location.href = STRIPE_PAYMENT_LINK_URL;
-}
+  const emailBtn = document.getElementById("emailBtn");
 
-document.getElementById("year").textContent = new Date().getFullYear();
+  if (emailBtn) {
+    emailBtn.addEventListener("click", async () => {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
 
-document.getElementById("payDeposit").addEventListener("click", goToPayment);
-document.getElementById("payDeposit2").addEventListener("click", goToPayment);
+      if (!name || !email || !message) {
+        alert("Please fill out all fields.");
+        return;
+      }
 
-document.getElementById("bookTop").addEventListener("click", () => {
-  document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
-});
-document.getElementById("bookCard").addEventListener("click", () => {
-  document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
-});
+      try {
+        emailBtn.disabled = true;
+        emailBtn.textContent = "Sending...";
 
-document.getElementById("emailBtn").addEventListener("click", () => {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
+        const resp = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ name, email, message })
+        });
 
-  const subject = encodeURIComponent("Doula inquiry");
-  const body = encodeURIComponent(
-`Name: ${name}
-Email: ${email}
+        const data = await resp.json();
 
-Message:
-${message}`
-  );
+        if (!resp.ok) {
+          throw new Error(data.error || "Failed.");
+        }
 
-  window.location.href = `mailto:hello@yourdomain.com?subject=${subject}&body=${body}`;
-});
-async function startCheckout() {
-  try {
-    const resp = await fetch("/api/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" }
+        alert("Message sent successfully!");
+
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("message").value = "";
+      } catch (err) {
+        console.error(err);
+        alert("Could not send message.");
+      } finally {
+        emailBtn.disabled = false;
+        emailBtn.textContent = "Send message";
+      }
     });
-
-    const data = await resp.json();
-
-    if (!resp.ok || !data.url) {
-      throw new Error(data.error || "No checkout URL returned.");
-    }
-
-    window.location.href = data.url;
-  } catch (err) {
-    console.error("Checkout error:", err);
-    alert("Couldn’t start payment. Please try again.");
   }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const yearEl = document.getElementById("year");
-  if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
-  }
-
-  const pay1 = document.getElementById("payBasicBtn");
-  const pay2 = document.getElementById("payBasicBtn2");
-
-  if (pay1) pay1.addEventListener("click", startCheckout);
-  if (pay2) pay2.addEventListener("click", startCheckout);
 });

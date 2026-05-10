@@ -97,3 +97,24 @@ input:focus,textarea:focus{border-color:#c4c0ff;box-shadow:0 0 0 4px rgba(107,91
   h1{font-size:36px;}
   .card-row{grid-template-columns:1fr;}
 }
+.language-toggle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.lang-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lang-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
